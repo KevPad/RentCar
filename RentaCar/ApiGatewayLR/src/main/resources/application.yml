@@ -1,0 +1,43 @@
+server:
+  port: 8060
+
+spring:
+  application:
+    name: ApiGatewayLR
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: CarInventoryService
+            uri: lb://carinventoryservice
+            predicates:
+              - Path=/micro/carinventoryservice/**
+          - id: CustomerService
+            uri: lb://customerservice
+            predicates:
+              - Path=/micro/customer/**
+          - id: BookingService
+            uri: lb://boookingservice
+            predicates:
+              - Path=/micro/booking/**
+          - id: PaymentService
+            uri: lb://paymentservice
+            predicates:
+              - Path=/micro/payment/**
+logging:
+  level:
+    root: info
+    org.springframework.cloud.gateway: DEBUG
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+  fetch-registry: true
+  register-with-eureka: true
+
+okta:
+  oauth2:
+    client-id: SHbVPiKAJfZJTMGAJo1m1UTsqTahg5Wp
+    client-secret: Pm0yreSt_IfOSyc4zfNmxFFZChedXulhLyolswPfgMDW-4_ArE8bnuonQ7elNDut
+    issuer: https://dev-mpr2w3aqhjlniluq.us.auth0.com

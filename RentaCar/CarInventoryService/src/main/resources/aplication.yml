@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: CarInventory
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5430/ms_booking
+    username: admin
+    password: 1234
+  cloud:
+    stream:
+      rabbit:
+        binder:
+          brokers: localhost
+      bindings:
+        carInventory:
+          destination: carInventory
+
+
+server:
+  port: 8081
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+
+okta:
+    oauth2:
+        issuer: ${OKTA_OAUTH2_ISSUER}
+        audience: ${OKTA_OAUTH2_AUDIENCE}
+
